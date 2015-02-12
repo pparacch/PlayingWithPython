@@ -1,0 +1,3 @@
+This is a new line and it should be at the beginning of the file.
+This is a second line, and it should be in the middle of the file.
+This is the final line. No other line after this one.
