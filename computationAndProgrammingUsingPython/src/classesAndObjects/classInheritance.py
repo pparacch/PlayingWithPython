@@ -35,22 +35,22 @@ class Person(object):
 
 
 ##Try out our base class Person
-me = Person("PierLorenzo Paracchini")
-print me
-print me.getLastName()
+#me = Person("PierLorenzo Paracchini")
+#print me
+#print me.getLastName()
 
-me.setBirthday(4, 10, 1971)
-print me.getAge()
+#me.setBirthday(4, 10, 1971)
+#print me.getAge()
 
-her = Person("Ingunn Ellingsen")
-print her.getLastName()
+#her = Person("Ingunn Ellingsen")
+#print her.getLastName()
 
-plist = [me, her]
+#plist = [me, her]
 
-for p in plist: print p
+#for p in plist: print p
 
-plist.sort()
-for p in plist: print p
+#plist.sort()
+#for p in plist: print p
 
 class MITPerson(Person): #inheritance from Person class
     nextIdNum = 0 #class variable
@@ -70,21 +70,56 @@ class MITPerson(Person): #inheritance from Person class
         return "%s, %s [%d]" % (self.name, self.lastName, self.idNum)
 
 
-p1 = MITPerson("Eric")
-p2 = MITPerson("John")
-p3 = MITPerson("John")
-p4 = MITPerson("Vibiane")
-p5 = Person("Ali Baba")
+#p1 = MITPerson("Eric")
+#p2 = MITPerson("John")
+#p3 = MITPerson("John")
+#p4 = MITPerson("Vibiane")
+#p5 = Person("Ali Baba")
 
-print p1
-print p5
-
-print "p1 < p4", p1 < p4
-
-mlist = [p2,p4,p3,p1]
-for m in mlist: print m
-
-mlist.sort()
-for m in mlist: print m
+#print p1
+#print p5
+#
+#print "p1 < p4", p1 < p4
+#
+#mlist = [p2,p4,p3,p1]
+#for m in mlist: print m
+#
+#mlist.sort()
+#for m in mlist: print m
 
 #print p4 < p5 #Raise an error cause Person behave differently from MITPerson
+
+##Buid up the hierachy introducing Student(s)
+
+class Student(MITPerson):
+    pass #Studen has exactly the same attributes/ behaviour as MITPerson
+
+class UG(Student):
+    def __init__(self, name, classYear):
+        Student.__init__(self, name)
+        self.classYear = classYear
+        
+    def getClassYear(self):
+        return self.classYear
+
+class TransferStudent(Student):
+    pass
+
+class Grad(Student):
+    pass #same as a Student
+
+def isStudent(obj):
+    return isinstance(obj, Student) #includes UG, Grad, TransferStudent
+    
+s1 = UG("Fred", 2016)
+s2 = Grad("Angela")
+s3 = TransferStudent("Pippo")
+
+p1 = Person("Pier Lorenzo Paracchini")
+m1 = MITPerson("Eric")
+
+print isStudent(s1)
+print isStudent(s2)
+print isStudent(s3)
+print isStudent(p1)
+print isStudent(m1)
