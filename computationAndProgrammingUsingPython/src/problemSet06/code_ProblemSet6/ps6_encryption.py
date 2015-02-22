@@ -99,9 +99,19 @@ def buildCoder(shift):
     shift: 0 <= int < 26
     returns: dict
     """
-    ### TODO.
-    return "Not yet implemented." # Remove this comment when you code the function
+    # Check constrain on shift
+    assert shift in range(0,26)
+    mapping = {} # Mapping letter (plainText) -> letter (cipherText)
+    upperCaseLetterRotator = string.ascii_uppercase + string.ascii_uppercase
+    lowerCaseLetterRotator = string.ascii_lowercase + string.ascii_lowercase 
     
+    for idx, letter in enumerate(upperCaseLetterRotator[:26]):
+        mapping[letter] = upperCaseLetterRotator[idx + shift]
+    
+    for idx, letter in enumerate(lowerCaseLetterRotator[:26]):
+        mapping[letter] = lowerCaseLetterRotator[idx + shift]
+    
+    return mapping
 
 def applyCoder(text, coder):
     """
