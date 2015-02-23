@@ -74,7 +74,7 @@ def randomScrambled(wordList, n):
     """
     s = randomString(wordList, n) + " "
     shifts = [(i, random.randint(0, 25)) for i in range(len(s)) if s[i-1] == ' ']
-    return applyShift(s, shifts)[:-1]
+    return applyShifts(s, shifts)[:-1]
 
 def getStoryString():
     """
