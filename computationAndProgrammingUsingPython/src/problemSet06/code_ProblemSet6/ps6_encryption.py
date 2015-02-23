@@ -74,13 +74,13 @@ def randomScrambled(wordList, n):
     """
     s = randomString(wordList, n) + " "
     shifts = [(i, random.randint(0, 25)) for i in range(len(s)) if s[i-1] == ' ']
-    return applyShifts(s, shifts)[:-1]
+    return applyShift(s, shifts)[:-1]
 
 def getStoryString():
     """
     Returns a story in encrypted text.
     """
-    return open("story.txt", "r").read()
+    return open("./courseraSpecialization/git_repos/PlayingWithPython/computationAndProgrammingUsingPython/src/problemSet06/code_ProblemSet6/story.txt", "r").read()
 
 
 # (end of helper code)
@@ -197,8 +197,12 @@ def decryptStory():
 
     returns: string - story in plain text
     """
-    ### TODO.
-    return "Not yet implemented." # Remove this comment when you code the function
+    wordList = loadWords()
+    text = getStoryString()
+    bestShift = findBestShift(wordList, text)
+    """Jack Florey is a mythical character created on the spur of a moment to help cover an insufficiently planned hack. He has been registered for classes at MIT twice before, but has reportedly never passed a class. It has been the tradition of the residents of East Campus to become Jack Florey for a few nights each year to educate incoming students in the ways, means, and ethics of hacking."""
+
+    return applyShift(text, bestShift)
 
 #
 # Build data structures used for entire session and run encryption
@@ -211,4 +215,4 @@ if __name__ == '__main__':
     bestShift = findBestShift(wordList, s)
     assert applyShift(s, bestShift) == 'Hello, world!'
     # To test decryptStory, comment the above four lines and uncomment this line:
-    #    decryptStory()
+    print decryptStory()
