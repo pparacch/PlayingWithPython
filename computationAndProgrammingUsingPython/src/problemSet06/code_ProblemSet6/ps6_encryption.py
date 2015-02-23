@@ -153,8 +153,40 @@ def findBestShift(wordList, text):
     text: string
     returns: 0 <= int < 26
     """
-    ### TODO
-    return "Not yet implemented." # Remove this comment when you code the function
+    noOfMeaningfullWords = 0
+    
+    meanigfullWords_max = 0
+    shiftKey_max =0
+    
+    decodedMessage = ""
+    
+    for guess in range(0, 26):
+        if guess != 0: guess = 26 - guess 
+        
+        decodedMessage = applyShift(text, guess).split(" ")
+        
+        #print "shift key: %d, decoded msg: %s" % (guess, decodedMessage)
+        
+        for decodedWord in decodedMessage:
+            #Check if the decoded word contains "strange" character
+            #Assumption check is performed on first and last characters
+            
+            if decodedWord[0].lower() not in string.ascii_lowercase:
+                 decodedWord = decodedWord[1:]
+                 
+            if decodedWord[-1].lower() not in string.ascii_lowercase:
+                 decodedWord = decodedWord[:-1]
+            
+            if isWord(wordList, decodedWord):
+                noOfMeaningfullWords += 1
+        
+        if noOfMeaningfullWords > meanigfullWords_max:
+            meanigfullWords_max = noOfMeaningfullWords
+            shiftKey_max = guess
+        
+        noOfMeaningfullWords = 0
+    
+    return shiftKey_max 
 
 def decryptStory():
     """
