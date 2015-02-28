@@ -87,11 +87,51 @@ class Trigger(object):
 # Problems 2-5
 
 # TODO: WordTrigger
-
+class WordTrigger(Trigger):
+    def __init__(self, word):
+        self.word = word
+    
+    def isWordIn(self, text):
+        procText = self.normalizeText(text)
+        
+        for element in procText.split(" "):
+            if element == self.word:
+                return True
+        
+        return False
+        
+    def normalizeText(self,text):
+        """Replace punctuation char with ' '."""
+        res = ""
+        for  idx, val in enumerate(text):
+            if val in string.punctuation:
+                val = " "
+            res += val
+        return res
+        
 # TODO: TitleTrigger
+class TitleTrigger(WordTrigger):
+    def __init__(self, word):
+        WordTrigger.__init__(self, word.rstrip().lower())
+    
+    def evaluate(self, story):
+        return WordTrigger.isWordIn(self, story.getTitle().rstrip().lower())
+    
 # TODO: SubjectTrigger
+class SubjectTrigger(WordTrigger):
+    def __init__(self, word):
+        WordTrigger.__init__(self, word.rstrip().lower())
+    
+    def evaluate(self, story):
+        return WordTrigger.isWordIn(self, story.getSubject().rstrip().lower())
+        
 # TODO: SummaryTrigger
-
+class SummaryTrigger(WordTrigger):
+    def __init__(self, word):
+        WordTrigger.__init__(self, word.rstrip().lower())
+    
+    def evaluate(self, story):
+        return WordTrigger.isWordIn(self, story.getSummary().rstrip().lower())
 
 # Composite Triggers
 # Problems 6-8
