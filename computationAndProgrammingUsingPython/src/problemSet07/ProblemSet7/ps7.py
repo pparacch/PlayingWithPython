@@ -188,9 +188,16 @@ def filterStories(stories, triggerlist):
 
     Returns: a list of only the stories for which a trigger in triggerlist fires.
     """
-    # TODO: Problem 10
-    # This is a placeholder (we're just returning all the stories, with no filtering) 
-    return stories
+    filteredStories = []
+    
+    for aStory in stories:
+        for aTrigger in triggerlist:
+            if aTrigger.evaluate(aStory):
+                filteredStories.append(aStory)
+                break
+    
+    return filteredStories
+    #return stories
 
 #======================
 # Part 4
@@ -212,7 +219,17 @@ def makeTrigger(triggerMap, triggerType, params, name):
 
     Returns a new instance of a trigger (ex: TitleTrigger, AndTrigger).
     """
-    # TODO: Problem 11
+    if triggerType == "TITLE": triggerMap[name] = TitleTrigger(params[0])
+    if triggerType == "SUBJECT": triggerMap[name] = SubjectTrigger(params[0])
+    if triggerType == "SUMMARY": triggerMap[name] = SummaryTrigger(params[0])
+    
+    if triggerType == "NOT": triggerMap[name] = NotTrigger(triggerMap[params[0]])
+    if triggerType == "AND": triggerMap[name] = AndTrigger(triggerMap[params[0]], triggerMap[params[1]])
+    if triggerType == "OR": triggerMap[name] = OrTrigger(triggerMap[params[0]], triggerMap[params[1]])    
+    
+    if triggerType == "PHRASE": triggerMap[name] = PhraseTrigger(" ".join(params))
+    
+    return triggerMap[name]
 
 
 def readTriggerConfig(filename):
@@ -226,6 +243,7 @@ def readTriggerConfig(filename):
     # to read in the file and eliminate
     # blank lines and comments
     triggerfile = open(filename, "r")
+    
     all = [ line.rstrip() for line in triggerfile.readlines() ]
     lines = []
     for line in all:
@@ -272,8 +290,10 @@ def main_thread(master):
         
         # TODO: Problem 11
         # After implementing makeTrigger, uncomment the line below:
-        # triggerlist = readTriggerConfig("triggers.txt")
-
+        triggerlist = readTriggerConfig("triggers.txt")
+        
+        print triggerlist
+        
         # **** from here down is about drawing ****
         frame = Frame(master)
         frame.pack(side=BOTTOM)
