@@ -137,9 +137,30 @@ class SummaryTrigger(WordTrigger):
 # Problems 6-8
 
 # TODO: NotTrigger
+class NotTrigger(Trigger):
+    def __init__(self, otherTrigger):
+        self.trigger = otherTrigger
+    
+    def evaluate(self, story):
+        return not self.trigger.evaluate(story)
+    
 # TODO: AndTrigger
-# TODO: OrTrigger
+class AndTrigger(Trigger):
+    def __init__(self, aTrigger, bTrigger):
+        self.st_trigger = aTrigger
+        self.nd_trigger = bTrigger
+    
+    def evaluate(self, story):
+        return self.st_trigger.evaluate(story) and self.nd_trigger.evaluate(story)
 
+# TODO: OrTrigger
+class OrTrigger(Trigger):
+    def __init__(self, aTrigger, bTrigger):
+        self.st_trigger = aTrigger
+        self.nd_trigger = bTrigger
+    
+    def evaluate(self, story):
+        return self.st_trigger.evaluate(story) or self.nd_trigger.evaluate(story)
 
 # Phrase Trigger
 # Question 9
